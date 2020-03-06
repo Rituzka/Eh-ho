@@ -1,11 +1,14 @@
 package com.example.eh_ho
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class LoginActivity : AppCompatActivity() {
 
@@ -13,14 +16,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val button: Button = findViewById(R.id.buttonLogin)
-        val listener: ((View) -> Unit) = { view: View ->
-            //recuperar el username
-            val username: String = findViewById<EditText>(R.id.inputUsername).text.toString()
-            //mostramos el mensaje
-            Toast.makeText(this, "Welcome to Eh-ho $(username)", Toast.LENGTH_SHORT).show()
-
-        }
-        button.setOnClickListener { listener }
 }
+    fun login(view:View) {
+        val intent: Intent = Intent(this, TopicsActivity::class.java)
+        startActivity(intent)
+
+    }
 }

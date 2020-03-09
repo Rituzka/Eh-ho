@@ -8,6 +8,8 @@ object TopicsRepo {
         return field
     }
 
+    fun getTopic(id: String)= topics.find { it.id == id }
+
     fun dummyTopics(count: Int = 50): List<Topic> {
         return (1..count).map { Topic(title = "Title ${it}", content = "Content ${it}")
 

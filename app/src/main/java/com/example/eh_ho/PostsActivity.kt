@@ -13,10 +13,14 @@ class PostsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_posts)
 
         val topicId = intent.getStringExtra(EXTRA_TOPIC_ID)
-        val topic = TopicsRepo.getTopic(topicId)
-
-        labelTitle.text = topic?.title
-        //34:51
-
+        if(topicId != null && topicId.isNotEmpty()){
+            val topic = TopicsRepo.getTopic(topicId)
+            //en caso que el topic no sea nulo ejecuta el cuerpo
+            topic?.let {
+                labelTitle.text = topic?.title
+            }
+        }else {
+            throw IllegalArgumentException("You should provide an id for the topic")
+        }
     }
 }

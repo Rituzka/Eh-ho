@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center_horizontal"
@@ -7,10 +8,16 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/inputUsername"
+        android:id="@+id/inputEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:hint="@string/hint_email" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/inputUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:hint="@string/hint_username" />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -21,8 +28,16 @@
         android:layout_marginTop="8dp"
         android:hint="@string/hint_password"/>
 
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/inputConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:layout_marginTop="8dp"
+        android:hint="@string/hint_ConfirmPassword"/>
+
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonLogin"
+        android:id="@+id/buttonSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -30,15 +45,17 @@
         android:layout_marginLeft="56dp"
         android:layout_marginStart="56dp"
         android:layout_marginEnd="56dp"
-        android:text="@string/login"
+        android:onClick="login"
+        android:text="@string/label_sign_up"
         app:backgroundTint="@color/colorPrimary"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/labelCreateAccount"
+        android:id="@+id/labelSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="true"
         android:layout_marginTop="8dp"
-        android:text="@string/label_create_account"/>
+        android:text="@string/label_sign_in"/>
+
 
 </LinearLayout>

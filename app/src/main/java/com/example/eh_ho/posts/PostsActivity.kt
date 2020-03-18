@@ -1,7 +1,9 @@
-package com.example.eh_ho
+package com.example.eh_ho.posts
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.eh_ho.R
+import com.example.eh_ho.data.TopicsRepo
 import kotlinx.android.synthetic.main.activity_posts.*
 
 const val EXTRA_TOPIC_ID = "topicId"

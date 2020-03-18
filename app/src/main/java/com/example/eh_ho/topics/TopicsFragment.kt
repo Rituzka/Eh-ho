@@ -1,31 +1,34 @@
 package com.example.eh_ho.topics
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_topics.view.*
 
 import com.example.eh_ho.R
 import com.example.eh_ho.data.Topic
 import com.example.eh_ho.data.TopicsRepo
-import com.example.eh_ho.posts.EXTRA_TOPIC_ID
-import com.example.eh_ho.posts.PostsActivity
 import kotlinx.android.synthetic.main.fragment_topics.*
-import kotlinx.android.synthetic.main.fragment_topics.view.listTopics
 
 class TopicsFragment : Fragment() {
-    var topicsInteractionListener: TopicsInteractionListener? = null
+    var listener: TopicsInteractionListener? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is TopicsInteractionListener)
-            topicsInteractionListener = context
+            listener = context
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+       inflater.inflate(R.menu.menu_topics, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onCreateView(
@@ -51,16 +54,24 @@ class TopicsFragment : Fragment() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_log_out -> listener?.onLogOut()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun goToCreateTopic() {
-        topicsInteractionListener?.onGoToCreateTopic()
+        listener?.onGoToCreateTopic()
     }
 
     private fun goToPosts(it: Topic) {
-        topicsInteractionListener?.onTopicSelected(it)
+        listener?.onTopicSelected(it)
     }
 
     interface TopicsInteractionListener {
         fun onTopicSelected(topic: Topic)
         fun onGoToCreateTopic()
+        fun onLogOut()
     }
 }

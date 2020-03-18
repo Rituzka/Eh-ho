@@ -19,6 +19,8 @@
     <string name="minutes_zero">Just now</string>
     <string name="error_short">The password must contain 10 characters at least</string>
     <string name="error_confirm">The passwords don`t match</string>
+    <string name="label_loading">Loading...</string>
+    <string name="log_out">Log out</string>
 
     <plurals name="years">
         <item quantity="one">%d year</item>

@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eh_ho.*
 import com.example.eh_ho.data.Topic
 import com.example.eh_ho.data.TopicsRepo
+import com.example.eh_ho.data.UserRepo
+import com.example.eh_ho.login.LoginActivity
 import com.example.eh_ho.posts.EXTRA_TOPIC_ID
 import com.example.eh_ho.posts.PostsActivity
 import kotlinx.android.synthetic.main.activity_topics.*
@@ -43,6 +45,14 @@ class TopicsActivity: AppCompatActivity(),
             .replace(R.id.fragmentContainer, CreateTopicFragment())
             .addToBackStack(TRANSACTION_CREATE_TOPIC)
             .commit()
+    }
+
+    override fun onLogOut() {
+        UserRepo.logOut(this)
+
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     override fun onTopicCreated() {

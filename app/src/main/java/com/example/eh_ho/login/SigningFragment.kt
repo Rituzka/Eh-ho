@@ -40,7 +40,7 @@ class SigningFragment: Fragment() {
     }
     private fun signIn() {
         if(isFormValid())
-        signInInteractionListener?.onSignIn()
+        signInInteractionListener?.onSignIn(inputUsername.text.toString())
         else
             showFormErrors()
 
@@ -64,7 +64,7 @@ class SigningFragment: Fragment() {
 
     interface SignInInteractionListener {
         fun onGoToSignUp()
-        fun onSignIn()
+        fun onSignIn(username: String)
     }
 
 }

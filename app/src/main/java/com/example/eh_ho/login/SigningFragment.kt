@@ -7,18 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.eh_ho.R
+import com.example.eh_ho.data.SignInModel
 import kotlinx.android.synthetic.main.fragment_signing.*
 import kotlinx.android.synthetic.main.fragment_signing.view.*
 import kotlinx.android.synthetic.main.fragment_signing.view.buttonLogin
 
 class SigningFragment: Fragment() {
-    var signInInteractionListener: SignInInteractionListener? = null
+    var listener: SignInInteractionListener? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         if (context is SignInInteractionListener)
-            signInInteractionListener = context
+            listener = context
     }
 
     override fun onCreateView(
@@ -26,24 +27,33 @@ class SigningFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-      return inflater.inflate(R.layout.fragment_signing, container, false)
+        return inflater.inflate(R.layout.fragment_signing, container, false)
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with (view) {
-            labelCreateAccount.setOnClickListener { goToSignUP() }
-            buttonLogin.setOnClickListener { signIn() }
+        with(view) {
+            labelCreateAccount.setOnClickListener {
+                goToSignUP()
+            }
+
+        buttonLogin.setOnClickListener {
+            signIn()
         }
     }
+}
     private fun signIn() {
-        if(isFormValid())
-        signInInteractionListener?.onSignIn(inputUsername.text.toString())
-        else
-            showFormErrors()
+        if(isFormValid()) {
+            val model = SignInModel(
+                inputUsername.text.toString(),
+                inputPassword.text.toString()
+            )
 
+            listener?.onSignIn(model)
+        } else
+            showFormErrors()
     }
 
     private fun showFormErrors() {
@@ -58,13 +68,13 @@ class SigningFragment: Fragment() {
                 inputPassword.text?.isNotEmpty() ?: false
 
     private fun goToSignUP() {
-        signInInteractionListener?.onGoToSignUp()
+        listener?.onGoToSignUp()
 
     }
 
     interface SignInInteractionListener {
         fun onGoToSignUp()
-        fun onSignIn(username: String)
+        fun onSignIn(username: SignInModel)
     }
 
 }

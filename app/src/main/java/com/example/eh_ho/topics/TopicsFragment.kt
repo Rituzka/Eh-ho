@@ -6,14 +6,17 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.example.eh_ho.R
+import com.example.eh_ho.data.RequestError
 import com.example.eh_ho.data.Topic
 import com.example.eh_ho.data.TopicsRepo
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_topics.*
+import kotlinx.android.synthetic.main.view_retry.*
 
 class TopicsFragment : Fragment() {
     var listener: TopicsInteractionListener? = null
+    lateinit var adapter: TopicsAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -24,6 +27,8 @@ class TopicsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        adapter = TopicsAdapter{ }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -42,9 +47,6 @@ class TopicsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = TopicsAdapter { goToPosts(it) }
-        adapter.setTopics(TopicsRepo.topics)
-
         listTopics.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL ) )
         listTopics.adapter = adapter
@@ -52,6 +54,57 @@ class TopicsFragment : Fragment() {
         buttonCreate.setOnClickListener {
             goToCreateTopic()
         }
+        buttonRetry.setOnClickListener {
+            loadTopics()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadTopics()
+    }
+
+    private fun loadTopics() {
+        enableLoading(true)
+
+        context?.let {
+            TopicsRepo.getTopics(it,
+                {
+                    enableLoading(false)
+                    adapter.setTopics(it)
+                },
+                {
+                    enableLoading(false)
+                    handleRequestError(it)
+                })
+        }
+    }
+
+    private fun enableLoading(enabled: Boolean) {
+        viewRetry.visibility = View.INVISIBLE
+        if(enabled) {
+            listTopics.visibility = View.INVISIBLE
+            buttonCreate.hide()
+            viewLoading.visibility = View.VISIBLE
+        } else {
+            listTopics.visibility = View.VISIBLE
+            buttonCreate.show()
+            viewLoading.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun handleRequestError(it: RequestError) {
+        listTopics.visibility = View.INVISIBLE
+        viewRetry.visibility = View.VISIBLE
+
+        val message =  if(it.messageResId != null)
+            getString(it.messageResId)
+        else if (it.message != null)
+            it.message
+        else
+            getString(R.string.error_request_default)
+        Snackbar.make(parentLayout, message, Snackbar.LENGTH_LONG).show()
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

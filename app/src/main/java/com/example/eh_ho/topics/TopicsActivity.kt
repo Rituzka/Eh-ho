@@ -22,13 +22,14 @@ class TopicsActivity: AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topics)
+
         if(savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragmentContainer, TopicsFragment())
                 .commit()
         }
-
     }
+
     private fun goToPosts(topic: Topic) {
         val intent = Intent(this, PostsActivity::class.java)
         intent.putExtra(EXTRA_TOPIC_ID, topic.id)
@@ -37,7 +38,6 @@ class TopicsActivity: AppCompatActivity(),
 
     override fun onTopicSelected(topic: Topic) {
         goToPosts(topic)
-
     }
 
     override fun onGoToCreateTopic() {

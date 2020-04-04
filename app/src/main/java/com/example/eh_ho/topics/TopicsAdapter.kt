@@ -21,8 +21,10 @@ class TopicsAdapter (
        }
 
        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopicHolder {
-         val view=  LayoutInflater.from(parent.context).inflate(R.layout.item_topic,parent, false)
-            return TopicHolder(view)
+         val view=
+             LayoutInflater.from(parent.context).inflate(R.layout.item_topic,parent, false)
+
+           return TopicHolder(view)
        }
 
        override fun getItemCount(): Int {
@@ -35,10 +37,17 @@ class TopicsAdapter (
            holder.itemView.setOnClickListener(listener)
        }
 
+    fun setTopics(topics: List<Topic>){
+        this.topics.clear()
+        this.topics.addAll(topics)
+        notifyDataSetChanged()
+    }
+
        inner class TopicHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
            var topic: Topic? = null
            set(value){
                field = value
+
                with(itemView) {
                    tag = field
                    field?.let {
@@ -62,11 +71,5 @@ class TopicsAdapter (
                else
                    itemView.context.resources.getString(R.string.minutes_zero)
            }
-       }
-
-       fun setTopics(topics: List<Topic>){
-           this.topics.clear()
-           this.topics.addAll(topics)
-           notifyDataSetChanged()
        }
    }

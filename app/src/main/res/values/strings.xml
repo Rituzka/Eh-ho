@@ -21,6 +21,13 @@
     <string name="error_confirm">The passwords don`t match</string>
     <string name="label_loading">Loading...</string>
     <string name="log_out">Log out</string>
+    <string name="error_not_registered">User not registered</string>
+    <string name="error_network">No internet connection</string>
+    <string name="error_request_default">Sorry, something bad happened, try again later</string>
+    <string name="error_invalid_response">Invalid response from server</string>
+    <string name="label_default_error">Ooops! something bad happened</string>
+    <string name="label_retry">retry</string>
+    <string name="label_create_topic">Create topic</string>
 
     <plurals name="years">
         <item quantity="one">%d year</item>

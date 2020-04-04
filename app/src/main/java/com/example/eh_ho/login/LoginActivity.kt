@@ -1,12 +1,16 @@
 package com.example.eh_ho.login
 import android.content.Intent
-import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.example.eh_ho.R
+import com.example.eh_ho.data.RequestError
+import com.example.eh_ho.data.SignInModel
+import com.example.eh_ho.data.SignUpModel
 import com.example.eh_ho.data.UserRepo
 import com.example.eh_ho.topics.TopicsActivity
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(),
@@ -22,10 +26,10 @@ class LoginActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        if(savedInstanceState == null) {
-           checkSession()
+        if (savedInstanceState == null) {
+            checkSession()
         }
-}
+    }
 
     private fun checkSession() {
         if (UserRepo.isLogged(this))
@@ -40,7 +44,7 @@ class LoginActivity : AppCompatActivity(),
             .commit()
     }
 
-    fun enableLoading(enabled: Boolean) {
+    private fun enableLoading(enabled: Boolean) {
         if (enabled) {
             fragmentContainer.visibility = View.INVISIBLE
             viewLoading.visibility = View.VISIBLE
@@ -50,10 +54,18 @@ class LoginActivity : AppCompatActivity(),
         }
     }
 
-    override fun onSignIn(username: String) {
+    override fun onSignIn(signInModel: SignInModel) {
         enableLoading(true)
-        UserRepo.signIn(this, username )
-        simulateLoading()
+        UserRepo.signIn(this,
+            signInModel,
+            {
+                enableLoading(false)
+                launchTopicsActivity()
+            },
+            {
+                enableLoading(false)
+                handleRequestError(it)
+            })
     }
 
     override fun onGoToSignIn() {
@@ -62,39 +74,33 @@ class LoginActivity : AppCompatActivity(),
             .commit()
     }
 
-    override fun onSignUp() {
+    override fun onSignUp(signUpModel: SignUpModel) {
         enableLoading(true)
-        simulateLoading()
+        UserRepo.signUp(this,
+            signUpModel,
+            {
+                enableLoading(false)
+                launchTopicsActivity()
+            },
+            {
+                enableLoading(false)
+                handleRequestError(it)
+            })
+    }
 
+    private fun handleRequestError(requestError: RequestError) {
+       val message =  if(requestError.messageResId != null)
+            getString(requestError.messageResId)
+        else if (requestError.message != null)
+           requestError.message
+        else
+       getString(R.string.error_request_default)
+        Snackbar.make(parentLayout, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun launchTopicsActivity() {
-        val intent: Intent = Intent(this, TopicsActivity::class.java)
+        val intent = Intent(this, TopicsActivity::class.java)
         startActivity(intent)
         finish()
-    }
-
-    private fun simulateLoading() {
-        val runnable = Runnable {
-            Thread.sleep(3000)
-            viewLoading.post {
-            launchTopicsActivity()
-            }
-        }
-        Thread(runnable).start()
-    }
-
-    private fun simulateLoadingAsyncTask() {
-        val task = object : AsyncTask<Void, Void, Boolean>() {
-            override fun doInBackground(vararg p0: Void?): Boolean {
-                Thread.sleep(3 * 1000)
-                return true
-            }
-            override fun onPostExecute(result: Boolean?) {
-                super.onPostExecute(result)
-                launchTopicsActivity()
-            }
-        }
-        task.execute()
     }
 }

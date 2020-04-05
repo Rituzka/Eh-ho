@@ -29,3 +29,12 @@ data class SignUpModel (val username: String,
              .put("raw", content)
      }
  }
+
+data class CreatePostModel (
+    val content: String
+) {
+    fun toJson(): JSONObject {
+        return JSONObject()
+            .put("raw", content)
+    }
+}

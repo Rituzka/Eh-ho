@@ -30,6 +30,18 @@ object ApiRoutes {
             .build()
             .toString()
 
+    fun getPosts() =
+        uriBuilder()
+            .appendPath("posts.json")
+            .build()
+            .toString()
+
+    fun createPost() =
+        uriBuilder()
+            .appendPath("posts.json")
+            .build()
+            .toString()
+
 
     private fun uriBuilder() =
         Uri.Builder()

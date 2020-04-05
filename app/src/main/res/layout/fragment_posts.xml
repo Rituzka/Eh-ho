@@ -5,23 +5,13 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include
-        android:id="@+id/viewLoading"
-        layout="@layout/view_loading"
-        android:visibility="invisible" />
-
-    <include
-        android:id="@+id/viewRetry"
-        layout="@layout/view_retry"
-        android:visibility="invisible" />
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listTopics"
+        android:id="@+id/listPosts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonCreate"
+        android:id="@+id/buttonCreatePost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right|end"

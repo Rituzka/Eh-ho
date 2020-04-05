@@ -28,6 +28,8 @@
     <string name="label_default_error">Ooops! something bad happened</string>
     <string name="label_retry">retry</string>
     <string name="label_create_topic">Create topic</string>
+    <string name="label_postTitle">Topic Title</string>
+    <string name="hint_date">Fecha de publicación</string>
 
     <plurals name="years">
         <item quantity="one">%d year</item>
@@ -53,5 +55,8 @@
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -3,7 +3,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.example.eh_ho.R
 import com.example.eh_ho.data.RequestError
 import com.example.eh_ho.data.SignInModel
@@ -54,10 +53,10 @@ class LoginActivity : AppCompatActivity(),
         }
     }
 
-    override fun onSignIn(signInModel: SignInModel) {
+    override fun onSignIn(username: SignInModel) {
         enableLoading(true)
         UserRepo.signIn(this,
-            signInModel,
+            username,
             {
                 enableLoading(false)
                 launchTopicsActivity()

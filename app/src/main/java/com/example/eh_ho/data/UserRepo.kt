@@ -25,7 +25,7 @@ object UserRepo {
        val request = AdminRequest(Request.Method.GET,
             ApiRoutes.signIn(signInModel.username),
             null,//COMO ES UN GET NO ENVIAREMOS NINGÚN TIPO DE BODY
-            {response ->
+            { _ ->
                 saveSession(context, signInModel.username)
                 onSuccess.invoke(signInModel)
             },

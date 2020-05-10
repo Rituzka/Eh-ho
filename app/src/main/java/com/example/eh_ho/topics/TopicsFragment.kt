@@ -28,7 +28,9 @@ class TopicsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        adapter = TopicsAdapter{ }
+        adapter = TopicsAdapter{
+            goToPosts(it)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

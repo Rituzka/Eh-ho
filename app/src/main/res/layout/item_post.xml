@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="8dp"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/labelPostTitle"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Topic title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/labelUser"
+        android:layout_width="400dp"
+        android:layout_height="25dp"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        tools:text="Username" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/labelContent"
+        android:layout_width="401dp"
+        android:layout_height="132dp"
+        android:textSize="14sp"
+        tools:text="Content" />
+
+</LinearLayout>

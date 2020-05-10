@@ -55,9 +55,12 @@ class TopicsAdapter (
                        labelPosts.text = it.posts.toString()
                        labelViews.text = it.views.toString()
                        setTimeOffset(it.getTimeOffset())
+
                    }
+
                }
            }
+
            private fun setTimeOffset(timeOffset: Topic.TimeOffset){
                val quantityString = when(timeOffset.unit) {
                    Calendar.YEAR -> R.plurals.years

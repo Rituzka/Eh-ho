@@ -12,6 +12,9 @@ import com.example.eh_ho.data.PostsRepo
 import com.example.eh_ho.data.RequestError
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_posts.*
+import kotlinx.android.synthetic.main.fragment_posts.parentLayout
+import kotlinx.android.synthetic.main.fragment_topics.*
+import kotlinx.android.synthetic.main.view_retry.*
 
 class PostsFragment : Fragment() {
     var listener: PostsInteractionListener? = null
@@ -53,9 +56,9 @@ class PostsFragment : Fragment() {
         buttonCreatePost.setOnClickListener {
             goToCreatePost()
         }
-        /*buttonRetry.setOnClickListener {
-        loadTopics()
-    }*/
+        buttonRetry.setOnClickListener {
+        loadPosts()
+    }
     }
 
     override fun onResume() {
@@ -64,37 +67,37 @@ class PostsFragment : Fragment() {
     }
 
     private fun loadPosts() {
-        // enableLoading(true)
+         enableLoading(true)
 
         context?.let {
             PostsRepo.getPosts(it,
                 {
-                    //enableLoading(false)
+                    enableLoading(false)
                     adapter.setPosts(it)
                 },
                 {
-                    // enableLoading(false)
+                     enableLoading(false)
                     handleRequestError(it)
                 })
         }
     }
 
-/*private fun enableLoading(enabled: Boolean) {
+private fun enableLoading(enabled: Boolean) {
     viewRetry.visibility = View.INVISIBLE
     if(enabled) {
-        listTopics.visibility = View.INVISIBLE
-        buttonCreate.hide()
+        listPosts.visibility = View.INVISIBLE
+        buttonCreatePost.hide()
         viewLoading.visibility = View.VISIBLE
     } else {
-        listTopics.visibility = View.VISIBLE
-        buttonCreate.show()
+        listPosts.visibility = View.VISIBLE
+        buttonCreatePost.show()
         viewLoading.visibility = View.INVISIBLE
     }
-}*/
+}
 
     private fun handleRequestError(it: RequestError) {
         listPosts.visibility = View.INVISIBLE
-        //viewRetry.visibility = View.VISIBLE
+        viewRetry.visibility = View.VISIBLE
 
         val message = if (it.messageResId != null)
             getString(it.messageResId)
@@ -115,10 +118,6 @@ class PostsFragment : Fragment() {
 
     private fun goToCreatePost() {
         listener?.onGoToCreatePost()
-    }
-
-    private fun goToPosts(it: Post) {
-        listener?.onPostSelected(it)
     }
 
     interface PostsInteractionListener {

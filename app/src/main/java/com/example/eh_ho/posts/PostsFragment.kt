@@ -1,6 +1,6 @@
 package com.example.eh_ho.posts
 
-import android.content.Context
+
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -20,17 +20,9 @@ class PostsFragment : Fragment() {
     var listener: PostsInteractionListener? = null
     lateinit var adapter: PostsAdapter
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is PostsInteractionListener)
-            listener = context
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
-        adapter = PostsAdapter { }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

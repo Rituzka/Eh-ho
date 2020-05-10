@@ -78,7 +78,6 @@ data class Post(
     val id: String = UUID.randomUUID().toString(),
     val username: String,
     val topicId: String,
-    val date: Date = Date(),
     val title: String,
     val content: String
 
@@ -99,44 +98,14 @@ data class Post(
         }
 
         fun parsePost(jsonObject: JSONObject): Post {
-            val date = jsonObject.getString("created_at")
-                .replace("Z", "+0000")
-
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault())
-            val dateFormatted = dateFormat.parse(date) ?: Date()
 
             return Post(
                 jsonObject.getInt("id").toString(),
                 jsonObject.getString("username"),
                 jsonObject.getInt("topic_id").toString(),
-                dateFormatted,
                 jsonObject.getString("topic_title"),
                 jsonObject.getString("raw")
             )
         }
-    }
-
-    data class TimeOffset(val amount: Int, val unit: Int)
-
-    fun getTimeOffset(dateToCompare: Date = Date()): TimeOffset {
-        val current = dateToCompare.time
-        val diff = current - date.time
-
-        val years = diff / YEAR_MILLIS
-        if (years > 0) return TimeOffset(years.toInt(), Calendar.YEAR)
-
-        val month = diff / MONTH_MILLIS
-        if (month > 0) return TimeOffset(month.toInt(), Calendar.MONTH)
-
-        val days = diff / DAY_MILLIS
-        if (days > 0) return TimeOffset(days.toInt(), Calendar.DAY_OF_MONTH)
-
-        val hours = diff / HOUR_MILLIS
-        if (hours > 0) return TimeOffset(hours.toInt(), Calendar.HOUR)
-
-        val minutes = diff / MINUTES_MILLIS
-        if (minutes > 0) return TimeOffset(minutes.toInt(), Calendar.MINUTE)
-
-        return TimeOffset(0, Calendar.MINUTE)
     }
 }

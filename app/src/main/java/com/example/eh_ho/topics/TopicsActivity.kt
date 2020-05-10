@@ -29,7 +29,6 @@ class TopicsActivity: AppCompatActivity(),
         }
     }
 
-
     override fun onTopicSelected(topic: Topic) {
       goToPosts(topic)
     }
@@ -40,8 +39,6 @@ class TopicsActivity: AppCompatActivity(),
             .addToBackStack(TRANSACTION_CREATE_TOPIC)
             .commit()
     }
-
-
 
 
     override fun onLogOut() {
